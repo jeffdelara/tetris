@@ -164,14 +164,4 @@ class Game {
         this.update();
         this.draw();
     }
-
-    controls(event)
-    {
-        switch(event.key)
-        {
-            case 'ArrowRight':
-                this.player.moveRight();
-                break;
-        }
-    }
 }
