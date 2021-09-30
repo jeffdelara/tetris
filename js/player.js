@@ -14,6 +14,22 @@ class Player
         this.tiles = tiles;
     }
 
+    removeTiles()
+    {
+        this.tiles = null;
+    }
+
+    getTileCoors()
+    {
+        let coors = [];
+        for(let tile of this.tiles)
+        {
+            coors.push([tile.row, tile.col]);
+        }
+
+        return coors;
+    }
+
     moveLeft(board)
     {
         let blocked = false;

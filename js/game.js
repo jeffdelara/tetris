@@ -3,9 +3,15 @@ class Game {
     {
         this.canvas = canvas;
         this.ctx = ctx;
-        this.tileWidth = 40;
+        this.tileWidth = 35;
         this.tiles = [];
         this.player = null;
+        this.STATE = {
+            PLAYING: 1, 
+            CHECKING: 2
+        }
+        this.counter = 0;
+        this.gameState = this.STATE.PLAYING;
         this.board = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,7 +59,7 @@ class Game {
         canvas.width = this.board[0].length * this.tileWidth;
         canvas.height = this.board.length * this.tileWidth;
 
-        this.createRandomTiles(20);
+        this.createRandomTiles(10);
 
         // give player tiles
         const tiles = [
@@ -64,14 +70,59 @@ class Game {
         ];
 
         this.player.setTiles(tiles);
+        this.gameState = this.STATE.PLAYING;
+        this.counter = 0;
     }
 
     update()
     {
         // main program
+        if(this.counter >= 30) 
+        {
+            this.gameState = this.STATE.CHECKING;
+            this.counter = 0;
+        }
+
+        switch (this.gameState) {
+            case this.STATE.PLAYING:
+                break;
+
+            case this.STATE.CHECKING:
+                const oldTileCoors = this.player.getTileCoors();
+                this.player.moveDown(this.board);
+                const newTileCoors = this.player.getTileCoors();
+
+                if(this.didNotMove(oldTileCoors, newTileCoors))
+                {
+                    // tranfer player.tiles to this.tiles
+                    this.transferToGameTiles(this.player.tiles);
+
+                    // remove player tile
+                    this.player.removeTiles();
+
+                    // TODO: generate new random piece
+                    
+
+                    // give player tiles
+                    this.player.setTiles(tiles);
+
+                    this.gameState = this.STATE.PLAYING;
+                    this.counter = 0;
+                }
+                else 
+                {
+                    console.log('Did move');
+                }
+                this.gameState = this.STATE.PLAYING;
+                break;
+        
+            default:
+                break;
+        }
 
         this.encodeTilesToBoard();
         this.encodePlayerTilesToBoard();
+        this.counter++;
     }
 
     draw()
@@ -84,6 +135,15 @@ class Game {
     clearBoard()
     {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    transferToGameTiles(playerTiles)
+    {
+        for(let playerTile of playerTiles)
+        {
+            playerTile.type = 1;
+            this.tiles.push(playerTile);
+        }
     }
     
     encodeTilesToBoard()
@@ -157,6 +217,21 @@ class Game {
           ctx.lineTo(i * tileWidth, canvas.height);
           ctx.stroke();
         }
+    }
+
+    didNotMove(oldTileCoors, newTileCoors)
+    {
+        for(let i = 0; i < oldTileCoors.length; i++)
+        {
+            const oldCoor = oldTileCoors[i];
+            const newCoor = newTileCoors[i]
+            if(oldCoor[0] !== newCoor[0] || oldCoor[1] !== newCoor[1])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     run()
