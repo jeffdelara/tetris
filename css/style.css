@@ -19,4 +19,5 @@ main {
 
 #canvas {
     border: 3px solid #000;
+    outline: none;
 }

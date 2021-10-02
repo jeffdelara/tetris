@@ -52,8 +52,8 @@ class Game {
     createRandomPiece()
     {
         const pieces = [
-            new IPiece(1, 1), 
-            new SquarePiece(1, 1)
+            new IPiece(1, 3), 
+            new SquarePiece(1, 4)
         ];
 
         const randomIndex = Math.floor(Math.random() * pieces.length);
@@ -94,6 +94,7 @@ class Game {
 
             case this.STATE.CHECKING:
                 this.lockPlayerPiece();
+                this.checkCompleteRows();
                 break;
         
             default:
@@ -152,9 +153,68 @@ class Game {
         }
         else 
         {
-            console.log('Did move');
+            // console.log('Did move');
         }
         this.gameState = this.STATE.PLAYING;
+    }
+
+    checkCompleteRows()
+    {
+        const bottom = this.board.length - 1;
+        const rowSize = this.board[0].length;
+        let completeRows = [];
+
+        for(let i = bottom; i > 0; i--) 
+        {
+            let rowScore = 0;
+            for(let j = 0; j < rowSize; j++) 
+            {
+                if(this.board[i][j] === 1) 
+                {
+                    rowScore++;
+                }
+            }
+            if(rowScore === 10) 
+            {
+                completeRows.push(i);
+                // increaseScore();
+            }
+        }
+        if(completeRows.length > 0)
+        {
+            this.removeRow(completeRows);
+        }
+    }
+
+    removeRow(rows)
+    {
+        for(let i = 0; i < rows.length; i++) 
+        {
+            for(let j = this.tiles.length - 1; j >= 0; j--)
+            {
+                if(this.tiles[j].row === rows[i]) 
+                {
+                    this.tiles.splice(j, 1);
+                }
+            }
+        }
+
+        this.dropTiles(rows);
+    }
+
+    dropTiles(rows)
+    {
+        const rowDrop = rows.length;
+        const min = Math.min(...rows);
+        console.log(min, rows);
+        for(let i = 0; i < this.tiles.length; i++)
+        {
+            const tile = this.tiles[i];
+            if(tile.row < min) 
+            {
+                tile.row += rowDrop;
+            }
+        }
     }
     
     encodeTilesToBoard()

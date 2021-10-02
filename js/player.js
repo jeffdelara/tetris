@@ -97,7 +97,7 @@ class Player
 
         for(let tile of this.piece.tiles)
         {
-            if(tile.row + 1 > 19) 
+            if(tile.row + 1 > board.length - 1) 
             {
                 blocked = true;
                 break;
