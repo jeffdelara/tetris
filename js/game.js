@@ -51,9 +51,15 @@ class Game {
 
     createRandomPiece()
     {
-        const ipiece = new IPiece(1, 1);
+        const pieces = [
+            new IPiece(1, 1), 
+            new SquarePiece(1, 1)
+        ];
+
+        const randomIndex = Math.floor(Math.random() * pieces.length);
+        const piece = pieces[randomIndex];
         
-        return ipiece;
+        return piece;
     }
 
     setPlayer(player)
