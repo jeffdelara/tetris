@@ -30,15 +30,16 @@ document.addEventListener('keydown', function(e){
             break;
         
         case 'ArrowDown':
-            game.player.moveDown(game.board);
+            // game.player.moveDown(game.board);
+            game.counter = 30;
             break;
 
         case 'ArrowUp':
-            game.player.moveUp(game.board);
+            // game.player.moveUp(game.board);
             break;
 
         case ' ':
-            game.player.rotate(game.board);
+            game.player.piece.rotate();
             break;
     }
 });
