@@ -49,6 +49,13 @@ class Game {
         }
     }
 
+    createRandomPiece()
+    {
+        const ipiece = new IPiece(1, 1);
+        
+        return ipiece;
+    }
+
     setPlayer(player)
     {
         this.player = player;
@@ -59,17 +66,17 @@ class Game {
         canvas.width = this.board[0].length * this.tileWidth;
         canvas.height = this.board.length * this.tileWidth;
 
-        this.createRandomTiles(10);
+        // this.createRandomTiles(10);
 
-        // give player tiles
-        const tiles = [
-            new Tile(0, 0),
-            new Tile(0, 1)
-            // new Tile(0, 2),
-            // new Tile(0, 3)
-        ];
+        // // give player tiles
+        // const tiles = [
+        //     new Tile(0, 0),
+        //     new Tile(0, 1)
+        //     // new Tile(0, 2),
+        //     // new Tile(0, 3)
+        // ];
 
-        this.player.setTiles(tiles);
+        this.player.setPiece(this.createRandomPiece());
         this.gameState = this.STATE.PLAYING;
         this.counter = 0;
     }
@@ -88,32 +95,7 @@ class Game {
                 break;
 
             case this.STATE.CHECKING:
-                const oldTileCoors = this.player.getTileCoors();
-                this.player.moveDown(this.board);
-                const newTileCoors = this.player.getTileCoors();
-
-                if(this.didNotMove(oldTileCoors, newTileCoors))
-                {
-                    // tranfer player.tiles to this.tiles
-                    this.transferToGameTiles(this.player.tiles);
-
-                    // remove player tile
-                    this.player.removeTiles();
-
-                    // TODO: generate new random piece
-                    
-
-                    // give player tiles
-                    this.player.setTiles(tiles);
-
-                    this.gameState = this.STATE.PLAYING;
-                    this.counter = 0;
-                }
-                else 
-                {
-                    console.log('Did move');
-                }
-                this.gameState = this.STATE.PLAYING;
+                this.lockPlayerPiece();
                 break;
         
             default:
@@ -145,6 +127,38 @@ class Game {
             this.tiles.push(playerTile);
         }
     }
+
+    lockPlayerPiece()
+    {
+        const oldTileCoors = this.player.getTileCoors();
+        this.player.moveDown(this.board);
+        const newTileCoors = this.player.getTileCoors();
+
+        if(this.didNotMove(oldTileCoors, newTileCoors))
+        {
+            console.log('Locked');
+            // tranfer player.tiles to this.tiles
+            this.transferToGameTiles(this.player.tiles);
+
+            // remove player tile
+            this.player.removeTiles();
+
+            // TODO: generate new random piece
+            // give player tiles
+            const piece = this.createRandomPiece();
+
+            // give player tiles
+            this.player.setPiece(piece);
+            
+
+            this.counter = 0;
+        }
+        else 
+        {
+            console.log('Did move');
+        }
+        this.gameState = this.STATE.PLAYING;
+    }
     
     encodeTilesToBoard()
     {
@@ -164,7 +178,7 @@ class Game {
 
     encodePlayerTilesToBoard()
     {
-        for(let tile of this.player.tiles)
+        for(let tile of this.player.piece.tiles)
         {
             this.board[tile.row][tile.col] = tile.type;
         }

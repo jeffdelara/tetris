@@ -2,15 +2,18 @@ class Player
 {
     constructor()
     {
-        this.tiles = null;
+        // this.tiles = null;
+        this.piece = null; 
+    }
+
+    setPiece(piece)
+    {
+        this.piece = piece;
+        this.setTiles(piece.tiles);
     }
 
     setTiles(tiles)
     {
-        for(let tile of tiles)
-        {
-            tile.type = 2;
-        }
         this.tiles = tiles;
     }
 
@@ -22,7 +25,7 @@ class Player
     getTileCoors()
     {
         let coors = [];
-        for(let tile of this.tiles)
+        for(let tile of this.piece.tiles)
         {
             coors.push([tile.row, tile.col]);
         }
@@ -32,9 +35,10 @@ class Player
 
     moveLeft(board)
     {
+        
         let blocked = false;
 
-        for(let tile of this.tiles)
+        for(let tile of this.piece.tiles)
         {
             if(tile.col - 1 < 0) 
             {
@@ -51,7 +55,7 @@ class Player
 
         if(!blocked)
         {
-            for(let tile of this.tiles)
+            for(let tile of this.piece.tiles)
             {
                 tile.col--;
             }
@@ -60,10 +64,12 @@ class Player
 
     moveRight(board)
     {
+        console.log(this.piece.tiles);
         let blocked = false;
         
-        for(let tile of this.tiles)
+        for(let tile of this.piece.tiles)
         {
+            
             if(tile.col + 1 > 9) 
             {
                 blocked = true;
@@ -79,7 +85,7 @@ class Player
 
         if(!blocked)
         {
-            for(let tile of this.tiles)
+            for(let tile of this.piece.tiles)
             {
                 tile.col++;
             }
@@ -90,7 +96,7 @@ class Player
     {
         let blocked = false;
 
-        for(let tile of this.tiles)
+        for(let tile of this.piece.tiles)
         {
             if(tile.row + 1 > 19) 
             {
@@ -107,7 +113,7 @@ class Player
 
         if(!blocked)
         {
-            for(let tile of this.tiles)
+            for(let tile of this.piece.tiles)
             {
                 tile.row++;
             }
@@ -118,7 +124,7 @@ class Player
     {
         let blocked = false;
 
-        for(let tile of this.tiles)
+        for(let tile of this.piece.tiles)
         {
             if(tile.row - 1 < 0) 
             {
@@ -135,7 +141,7 @@ class Player
 
         if(!blocked)
         {
-            for(let tile of this.tiles)
+            for(let tile of this.piece.tiles)
             {
                 tile.row--;
             }
