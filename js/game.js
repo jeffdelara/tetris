@@ -68,14 +68,6 @@ class Game {
 
         // this.createRandomTiles(10);
 
-        // // give player tiles
-        // const tiles = [
-        //     new Tile(0, 0),
-        //     new Tile(0, 1)
-        //     // new Tile(0, 2),
-        //     // new Tile(0, 3)
-        // ];
-
         this.player.setPiece(this.createRandomPiece());
         this.gameState = this.STATE.PLAYING;
         this.counter = 0;
@@ -136,7 +128,6 @@ class Game {
 
         if(this.didNotMove(oldTileCoors, newTileCoors))
         {
-            console.log('Locked');
             // tranfer player.tiles to this.tiles
             this.transferToGameTiles(this.player.tiles);
 

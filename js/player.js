@@ -64,7 +64,6 @@ class Player
 
     moveRight(board)
     {
-        console.log(this.piece.tiles);
         let blocked = false;
         
         for(let tile of this.piece.tiles)
