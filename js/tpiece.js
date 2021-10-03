@@ -85,115 +85,70 @@ class TPiece {
 
     rotate(board)
     {
+        let results = false;
+        let futureCoors = [];
+        
         switch (this.state) {
             case this.STATE.DOWN:
-                const futureLeftCoors = [
+                futureCoors = [
                         [ this.tiles[0].row - 1, this.tiles[0].col + 1 ],
                         [ this.tiles[1].row, this.tiles[1].col ],
                         [ this.tiles[2].row + 1, this.tiles[2].col - 1 ],
                         [ this.tiles[3].row - 1, this.tiles[3].col - 1]
                     ];
 
-                const resultLeftCoors = this.checkFutureCoors(futureLeftCoors, board);
+                results = this.checkFutureCoors(futureCoors, board);
 
-                if(resultLeftCoors.canRotate)
+                if(results.canRotate)
                 {
-                    this.tiles[0].row = futureLeftCoors[0][0];
-                    this.tiles[0].col = futureLeftCoors[0][1];
-
-                    this.tiles[1].row = futureLeftCoors[1][0];
-                    this.tiles[1].col = futureLeftCoors[1][1];
-
-                    this.tiles[2].row = futureLeftCoors[2][0];
-                    this.tiles[2].col = futureLeftCoors[2][1];
-
-                    this.tiles[3].row = futureLeftCoors[3][0];
-                    this.tiles[3].col = futureLeftCoors[3][1];
-
                     this.state = this.STATE.LEFT;
                 }
                 break;
             
             case this.STATE.LEFT:
-                const futureUpCoors = [
+                futureCoors = [
                     [ this.tiles[0].row + 1, this.tiles[0].col + 1 ],
                     [ this.tiles[1].row, this.tiles[1].col ],
                     [ this.tiles[2].row - 1, this.tiles[2].col - 1 ],
                     [ this.tiles[3].row - 1, this.tiles[3].col + 1]
                 ];
 
-                const resultUpCoors = this.checkFutureCoors(futureUpCoors, board);
+                results = this.checkFutureCoors(futureCoors, board);
 
-                if(resultUpCoors.canRotate)
+                if(results.canRotate)
                 {
-                    this.tiles[0].row = futureUpCoors[0][0];
-                    this.tiles[0].col = futureUpCoors[0][1];
-
-                    this.tiles[1].row = futureUpCoors[1][0];
-                    this.tiles[1].col = futureUpCoors[1][1];
-
-                    this.tiles[2].row = futureUpCoors[2][0];
-                    this.tiles[2].col = futureUpCoors[2][1];
-
-                    this.tiles[3].row = futureUpCoors[3][0];
-                    this.tiles[3].col = futureUpCoors[3][1];
-
                     this.state = this.STATE.UP;
                 }
                 break;
 
             case this.STATE.UP: 
-                const futureRightCoors = [
+                futureCoors = [
                     [ this.tiles[0].row + 1, this.tiles[0].col - 1 ],
                     [ this.tiles[1].row, this.tiles[1].col ],
                     [ this.tiles[2].row - 1, this.tiles[2].col + 1 ],
                     [ this.tiles[3].row + 1, this.tiles[3].col + 1]
                 ];
 
-                const resultRightCoors = this.checkFutureCoors(futureRightCoors, board);
+                results = this.checkFutureCoors(futureCoors, board);
                 
-                if(resultRightCoors.canRotate)
+                if(results.canRotate)
                 {
-                    this.tiles[0].row = futureRightCoors[0][0];
-                    this.tiles[0].col = futureRightCoors[0][1];
-
-                    this.tiles[1].row = futureRightCoors[1][0];
-                    this.tiles[1].col = futureRightCoors[1][1];
-
-                    this.tiles[2].row = futureRightCoors[2][0];
-                    this.tiles[2].col = futureRightCoors[2][1];
-
-                    this.tiles[3].row = futureRightCoors[3][0];
-                    this.tiles[3].col = futureRightCoors[3][1];
-
                     this.state = this.STATE.RIGHT;
                 }
                 break;
 
             case this.STATE.RIGHT:
-                const futureDownCoors = [
+                futureCoors = [
                     [ this.tiles[0].row - 1, this.tiles[0].col - 1 ],
                     [ this.tiles[1].row, this.tiles[1].col ],
                     [ this.tiles[2].row + 1, this.tiles[2].col + 1],
                     [ this.tiles[3].row + 1, this.tiles[3].col - 1 ]
                 ];
 
-                const resultDownCoors = this.checkFutureCoors(futureDownCoors, board);
+                results = this.checkFutureCoors(futureCoors, board);
                 
-                if(resultDownCoors.canRotate)
+                if(results.canRotate)
                 {
-                    this.tiles[0].row = futureDownCoors[0][0];
-                    this.tiles[0].col = futureDownCoors[0][1];
-
-                    this.tiles[1].row = futureDownCoors[1][0];
-                    this.tiles[1].col = futureDownCoors[1][1];
-
-                    this.tiles[2].row = futureDownCoors[2][0];
-                    this.tiles[2].col = futureDownCoors[2][1];
-
-                    this.tiles[3].row = futureDownCoors[3][0];
-                    this.tiles[3].col = futureDownCoors[3][1];
-
                     this.state = this.STATE.DOWN;
                 }
                 break;
@@ -201,62 +156,19 @@ class TPiece {
                 break;
         }
         
-        // if(this.flat)
-        // {
-        //     const futureStandingCoors = [
-        //         [ this.tiles[0].row - 1, this.tiles[0].col + 1 ],
-        //         [ this.tiles[1].row, this.tiles[1].col ],
-        //         [ this.tiles[2].row + 1, this.tiles[1].col ],
-        //         [ this.tiles[3].row + 2, this.tiles[1].col ]
-        //     ];
-    
-        //     const result = this.checkFutureCoors(futureStandingCoors, board);
-            
-        //     if(result.canRotate)
-        //     {
-        //         this.tiles[0].row = futureStandingCoors[0][0];
-        //         this.tiles[0].col = futureStandingCoors[0][1];
+        if(results.canRotate)
+        {
+            this.tiles[0].row = futureCoors[0][0];
+            this.tiles[0].col = futureCoors[0][1];
 
-        //         this.tiles[1].row = futureStandingCoors[1][0];
-        //         this.tiles[1].col = futureStandingCoors[1][1];
+            this.tiles[1].row = futureCoors[1][0];
+            this.tiles[1].col = futureCoors[1][1];
 
-        //         this.tiles[2].row = futureStandingCoors[2][0];
-        //         this.tiles[2].col = futureStandingCoors[2][1];
+            this.tiles[2].row = futureCoors[2][0];
+            this.tiles[2].col = futureCoors[2][1];
 
-        //         this.tiles[3].row = futureStandingCoors[3][0];
-        //         this.tiles[3].col = futureStandingCoors[3][1];
-
-        //         this.flat = !this.flat;
-        //     }
-        // }
-        // else 
-        // {
-
-        //     const futureFlatCoors = [
-        //         [ this.tiles[1].row, this.tiles[0].col - 1 ],
-        //         [ this.tiles[1].row, this.tiles[1].col ],
-        //         [ this.tiles[1].row, this.tiles[1].col + 1 ],
-        //         [ this.tiles[1].row, this.tiles[1].col + 2 ]
-        //     ];
-    
-        //     const result = this.checkFutureCoors(futureFlatCoors, board);
-            
-        //     if(result.canRotate)
-        //     {
-        //         this.tiles[0].row = futureFlatCoors[0][0];
-        //         this.tiles[0].col = futureFlatCoors[0][1];
-
-        //         this.tiles[1].row = futureFlatCoors[1][0];
-        //         this.tiles[1].col = futureFlatCoors[1][1];
-
-        //         this.tiles[2].row = futureFlatCoors[2][0];
-        //         this.tiles[2].col = futureFlatCoors[2][1];
-
-        //         this.tiles[3].row = futureFlatCoors[3][0];
-        //         this.tiles[3].col = futureFlatCoors[3][1];
-
-        //         this.flat = !this.flat;
-        //     }
-        // }
+            this.tiles[3].row = futureCoors[3][0];
+            this.tiles[3].col = futureCoors[3][1];
+        }
     }
 }

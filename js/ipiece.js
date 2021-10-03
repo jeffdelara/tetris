@@ -78,63 +78,56 @@ class IPiece {
 
     rotate(board)
     {
+        let results = false;
+        let futureCoors = [];
         
         if(this.flat)
         {
-            const futureStandingCoors = [
+            futureCoors = [
                 [ this.tiles[0].row - 1, this.tiles[0].col + 1 ],
                 [ this.tiles[1].row, this.tiles[1].col ],
                 [ this.tiles[2].row + 1, this.tiles[1].col ],
                 [ this.tiles[3].row + 2, this.tiles[1].col ]
             ];
     
-            const result = this.checkFutureCoors(futureStandingCoors, board);
+            results = this.checkFutureCoors(futureCoors, board);
             
-            if(result.canRotate)
+            if(results.canRotate)
             {
-                this.tiles[0].row = futureStandingCoors[0][0];
-                this.tiles[0].col = futureStandingCoors[0][1];
-
-                this.tiles[1].row = futureStandingCoors[1][0];
-                this.tiles[1].col = futureStandingCoors[1][1];
-
-                this.tiles[2].row = futureStandingCoors[2][0];
-                this.tiles[2].col = futureStandingCoors[2][1];
-
-                this.tiles[3].row = futureStandingCoors[3][0];
-                this.tiles[3].col = futureStandingCoors[3][1];
-
                 this.flat = !this.flat;
             }
         }
         else 
         {
 
-            const futureFlatCoors = [
+            futureCoors = [
                 [ this.tiles[1].row, this.tiles[0].col - 1 ],
                 [ this.tiles[1].row, this.tiles[1].col ],
                 [ this.tiles[1].row, this.tiles[1].col + 1 ],
                 [ this.tiles[1].row, this.tiles[1].col + 2 ]
             ];
     
-            const result = this.checkFutureCoors(futureFlatCoors, board);
+            results = this.checkFutureCoors(futureCoors, board);
             
-            if(result.canRotate)
+            if(results.canRotate)
             {
-                this.tiles[0].row = futureFlatCoors[0][0];
-                this.tiles[0].col = futureFlatCoors[0][1];
-
-                this.tiles[1].row = futureFlatCoors[1][0];
-                this.tiles[1].col = futureFlatCoors[1][1];
-
-                this.tiles[2].row = futureFlatCoors[2][0];
-                this.tiles[2].col = futureFlatCoors[2][1];
-
-                this.tiles[3].row = futureFlatCoors[3][0];
-                this.tiles[3].col = futureFlatCoors[3][1];
-
                 this.flat = !this.flat;
             }
+        }
+
+        if(results.canRotate)
+        {
+            this.tiles[0].row = futureCoors[0][0];
+            this.tiles[0].col = futureCoors[0][1];
+
+            this.tiles[1].row = futureCoors[1][0];
+            this.tiles[1].col = futureCoors[1][1];
+
+            this.tiles[2].row = futureCoors[2][0];
+            this.tiles[2].col = futureCoors[2][1];
+
+            this.tiles[3].row = futureCoors[3][0];
+            this.tiles[3].col = futureCoors[3][1];
         }
     }
 }
