@@ -11,6 +11,7 @@ class Game {
             CHECKING: 2
         }
         this.counter = 0;
+        this.speed = 35;
         this.gameState = this.STATE.PLAYING;
         this.board = [
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -52,8 +53,9 @@ class Game {
     createRandomPiece()
     {
         const pieces = [
-            new IPiece(1, 3), 
-            new SquarePiece(1, 4)
+            new IPiece(0, 3),
+            new SquarePiece(0, 4), 
+            new TPiece(0, 3)
         ];
 
         const randomIndex = Math.floor(Math.random() * pieces.length);
@@ -82,7 +84,7 @@ class Game {
     update()
     {
         // main program
-        if(this.counter >= 30) 
+        if(this.counter >= this.speed) 
         {
             this.gameState = this.STATE.CHECKING;
             this.counter = 0;
@@ -90,11 +92,13 @@ class Game {
 
         switch (this.gameState) {
             case this.STATE.PLAYING:
+                this.counter++;
                 break;
 
             case this.STATE.CHECKING:
                 this.lockPlayerPiece();
                 this.checkCompleteRows();
+                this.gameState = this.STATE.PLAYING;
                 break;
         
             default:
@@ -103,19 +107,18 @@ class Game {
 
         this.encodeTilesToBoard();
         this.encodePlayerTilesToBoard();
-        this.counter++;
     }
 
     draw()
     {
         this.clearBoard();
-        this.drawGridLines();
         this.drawBoard();
+        // this.drawGridLines();
     }
 
     clearBoard()
     {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     transferToGameTiles(playerTiles)
@@ -155,7 +158,7 @@ class Game {
         {
             // console.log('Did move');
         }
-        this.gameState = this.STATE.PLAYING;
+        
     }
 
     checkCompleteRows()
@@ -206,7 +209,7 @@ class Game {
     {
         const rowDrop = rows.length;
         const min = Math.min(...rows);
-        console.log(min, rows);
+        
         for(let i = 0; i < this.tiles.length; i++)
         {
             const tile = this.tiles[i];
@@ -260,9 +263,10 @@ class Game {
     {
         if(number !== 0)
         {
-            ctx.fillRect(row * this.tileWidth, col * this.tileWidth, this.tileWidth, this.tileWidth);
-        }
-        
+            this.ctx.strokeStyle = "#FFFFFF";
+            this.ctx.strokeRect(row * this.tileWidth, col * this.tileWidth, this.tileWidth, this.tileWidth);
+            this.ctx.fillRect(row * this.tileWidth, col * this.tileWidth, this.tileWidth, this.tileWidth);
+        }   
     }
 
     drawGridLines()
@@ -270,7 +274,7 @@ class Game {
         const board = this.board;
         const tileWidth = this.tileWidth;
 
-        ctx.strokeStyle = "#DDD";
+        ctx.strokeStyle = "#FFF";
         ctx.lineWidth = 1;
         const height = board.length;
         const width = board[0].length;

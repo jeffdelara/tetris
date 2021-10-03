@@ -37,7 +37,6 @@ class IPiece {
 
         for(let tile of coors)
         {
-            console.log(board[tile[0]][tile[1]]);
             if(board[tile[0]][tile[1]] === 1)
             {
                 adjustment.canRotate = false;

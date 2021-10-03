@@ -31,7 +31,7 @@ document.addEventListener('keydown', function(e){
         
         case 'ArrowDown':
             // game.player.moveDown(game.board);
-            game.counter = 30;
+            game.counter = game.speed;
             break;
 
         case 'ArrowUp':
