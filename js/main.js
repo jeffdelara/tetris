@@ -2,7 +2,7 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const game = new Game(canvas, ctx);
-const fps = 30;
+const fps = 60;
 const player = new Player();
 
 game.setPlayer(player);
