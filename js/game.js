@@ -144,13 +144,11 @@ class Game {
             // remove player tile
             this.player.removeTiles();
 
-            // TODO: generate new random piece
             // give player tiles
             const piece = this.createRandomPiece();
 
             // give player tiles
             this.player.setPiece(piece);
-            
 
             this.counter = 0;
         }
@@ -305,7 +303,6 @@ class Game {
                 return false;
             }
         }
-
         return true;
     }
 
