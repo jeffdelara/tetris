@@ -39,7 +39,7 @@ document.addEventListener('keydown', function(e){
             break;
 
         case ' ':
-            game.player.piece.rotate();
+            game.player.piece.rotate(game.board);
             break;
     }
 });
