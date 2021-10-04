@@ -52,10 +52,12 @@ class Game {
 
     createRandomPiece()
     {
+        // console.log(new LPiece(1, 3));
         const pieces = [
-            new IPiece(0, 3),
-            new SquarePiece(0, 4),
-            new TPiece(0, 3)
+            new JPiece(2, 3), 
+            new IPiece(1, 3),
+            new SquarePiece(1, 4),
+            new TPiece(1, 3)
         ];
 
         const randomIndex = Math.floor(Math.random() * pieces.length);
