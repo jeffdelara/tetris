@@ -55,6 +55,7 @@ class Game {
     {
         // console.log(new LPiece(1, 3));
         const pieces = [
+            new LPiece(1, 3),
             new SPiece(1, 3), 
             new ZPiece(1, 3),
             new JPiece(2, 3), 
