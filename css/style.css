@@ -22,4 +22,5 @@ main {
     background-color: #000;
     padding: .2rem .1rem;
     outline: none;
+    border-radius: 10px;
 }

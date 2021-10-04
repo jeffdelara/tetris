@@ -8,7 +8,8 @@ class Game {
         this.player = null;
         this.STATE = {
             PLAYING: 1, 
-            CHECKING: 2
+            CHECKING: 2,
+            PAUSE: 3
         }
         this.counter = 0;
         this.speed = 35;
@@ -112,7 +113,10 @@ class Game {
                 
                 this.gameState = this.STATE.PLAYING;
                 break;
-        
+            
+            case this.STATE.PAUSE:
+                break;
+
             default:
                 break;
         }
