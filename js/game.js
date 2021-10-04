@@ -54,7 +54,7 @@ class Game {
     {
         const pieces = [
             new IPiece(0, 3),
-            new SquarePiece(0, 4), 
+            new SquarePiece(0, 4),
             new TPiece(0, 3)
         ];
 
@@ -96,8 +96,17 @@ class Game {
                 break;
 
             case this.STATE.CHECKING:
-                this.lockPlayerPiece();
+                const isLocked = this.lockPlayerPiece();
                 this.checkCompleteRows();
+
+                if(isLocked)
+                {
+                    // give player new tiles
+                    const piece = this.createRandomPiece();
+                    // give player tiles
+                    this.player.setPiece(piece);
+                }
+                
                 this.gameState = this.STATE.PLAYING;
                 break;
         
@@ -113,7 +122,7 @@ class Game {
     {
         this.clearBoard();
         this.drawBoard();
-        // this.drawGridLines();
+        this.drawGridLines();
     }
 
     clearBoard()
@@ -135,28 +144,22 @@ class Game {
         const oldTileCoors = this.player.getTileCoors();
         this.player.moveDown(this.board);
         const newTileCoors = this.player.getTileCoors();
+        let isLocked = false;
 
         if(this.didNotMove(oldTileCoors, newTileCoors))
         {
             // tranfer player.tiles to this.tiles
             this.transferToGameTiles(this.player.tiles);
-
             // remove player tile
             this.player.removeTiles();
-
-            // give player tiles
-            const piece = this.createRandomPiece();
-
-            // give player tiles
-            this.player.setPiece(piece);
-
+            isLocked = true;
             this.counter = 0;
         }
         else 
         {
-            // console.log('Did move');
+            isLocked = false;
         }
-        
+        return isLocked;
     }
 
     checkCompleteRows()
@@ -244,27 +247,16 @@ class Game {
 
     drawBoard()
     {
-        const board = this.board;
-        const rows = board.length; 
-        const cols = board[0].length;
-        
-        for(let i = 0; i < rows; i++)
-        {
-            for(let j = 0; j < cols; j++)
-            {
-                this.drawTile(j, i, board[i][j]);
-            }
-        }
+        const tiles = this.tiles.concat(this.player.piece.tiles);
+        tiles.forEach( tile => {
+            this.drawTile(tile);
+        });
     }
 
-    drawTile(row, col, number)
+    drawTile(tile)
     {
-        if(number !== 0)
-        {
-            this.ctx.strokeStyle = "#FFFFFF";
-            this.ctx.strokeRect(row * this.tileWidth, col * this.tileWidth, this.tileWidth, this.tileWidth);
-            this.ctx.fillRect(row * this.tileWidth, col * this.tileWidth, this.tileWidth, this.tileWidth);
-        }   
+        this.ctx.fillStyle = tile.color; 
+        this.ctx.fillRect(tile.col * this.tileWidth, tile.row * this.tileWidth, this.tileWidth, this.tileWidth);
     }
 
     drawGridLines()
@@ -273,7 +265,7 @@ class Game {
         const tileWidth = this.tileWidth;
 
         ctx.strokeStyle = "#FFF";
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 2;
         const height = board.length;
         const width = board[0].length;
     

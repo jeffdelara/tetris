@@ -4,12 +4,13 @@ class IPiece {
         this.row = row;
         this.col = col; 
         this.type = type;
+        const color = '#e52165';
 
         this.tiles = [
-            new Tile(this.row, this.col, 2),
-            new Tile(this.row, this.col + 1, 2),
-            new Tile(this.row, this.col + 2, 2),
-            new Tile(this.row, this.col + 3, 2)
+            new Tile(this.row, this.col, 2, color),
+            new Tile(this.row, this.col + 1, 2, color),
+            new Tile(this.row, this.col + 2, 2, color),
+            new Tile(this.row, this.col + 3, 2, color)
         ];
 
         this.flat = true;
