@@ -1,24 +1,23 @@
-class TPiece extends Piece {
+class ZPiece extends Piece 
+{
     constructor(row, col, type = 2) 
     {
         super(row, col, type);
         this.row = row;
         this.col = col; 
         this.type = type;
-        const color = '#a2d5c6';
+        const color = '#12a4d9';
 
         this.tiles = [
             new Tile(this.row, this.col - 1, 2, color),
-            new Tile(this.row, this.col, 2, color),
-            new Tile(this.row, this.col + 1, 2, color),
-            new Tile(this.row + 1, this.col, 2, color)
+            new Tile(this.row , this.col, 2, color),
+            new Tile(this.row + 1, this.col, 2, color),
+            new Tile(this.row + 1, this.col + 1, 2, color)
         ];
 
         this.STATE = {
             DOWN: 0,
-            LEFT: 1, 
-            UP: 2, 
-            RIGHT: 3
+            UP: 2
         }
 
         this.state = this.STATE.DOWN;
@@ -34,25 +33,9 @@ class TPiece extends Piece {
                 futureCoors = [
                         [ this.tiles[0].row - 1, this.tiles[0].col + 1 ],
                         [ this.tiles[1].row, this.tiles[1].col ],
-                        [ this.tiles[2].row + 1, this.tiles[2].col - 1 ],
-                        [ this.tiles[3].row - 1, this.tiles[3].col - 1]
+                        [ this.tiles[2].row - 1, this.tiles[2].col - 1 ],
+                        [ this.tiles[3].row, this.tiles[3].col - 2]
                     ];
-
-                results = this.checkFutureCoors(futureCoors, board);
-
-                if(results.canRotate)
-                {
-                    this.state = this.STATE.LEFT;
-                }
-                break;
-            
-            case this.STATE.LEFT:
-                futureCoors = [
-                    [ this.tiles[0].row + 1, this.tiles[0].col + 1 ],
-                    [ this.tiles[1].row, this.tiles[1].col ],
-                    [ this.tiles[2].row - 1, this.tiles[2].col - 1 ],
-                    [ this.tiles[3].row - 1, this.tiles[3].col + 1]
-                ];
 
                 results = this.checkFutureCoors(futureCoors, board);
 
@@ -63,27 +46,12 @@ class TPiece extends Piece {
                 break;
 
             case this.STATE.UP: 
-                futureCoors = [
-                    [ this.tiles[0].row + 1, this.tiles[0].col - 1 ],
-                    [ this.tiles[1].row, this.tiles[1].col ],
-                    [ this.tiles[2].row - 1, this.tiles[2].col + 1 ],
-                    [ this.tiles[3].row + 1, this.tiles[3].col + 1]
-                ];
-
-                results = this.checkFutureCoors(futureCoors, board);
                 
-                if(results.canRotate)
-                {
-                    this.state = this.STATE.RIGHT;
-                }
-                break;
-
-            case this.STATE.RIGHT:
                 futureCoors = [
-                    [ this.tiles[0].row - 1, this.tiles[0].col - 1 ],
+                    [ this.tiles[0].row + 1, this.tiles[0].col - 1],
                     [ this.tiles[1].row, this.tiles[1].col ],
-                    [ this.tiles[2].row + 1, this.tiles[2].col + 1],
-                    [ this.tiles[3].row + 1, this.tiles[3].col - 1 ]
+                    [ this.tiles[2].row + 1, this.tiles[2].col + 1 ],
+                    [ this.tiles[3].row, this.tiles[3].col + 2 ]
                 ];
 
                 results = this.checkFutureCoors(futureCoors, board);
@@ -93,6 +61,7 @@ class TPiece extends Piece {
                     this.state = this.STATE.DOWN;
                 }
                 break;
+                
             default:
                 break;
         }

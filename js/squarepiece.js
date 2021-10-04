@@ -4,7 +4,7 @@ class SquarePiece {
         this.row = row;
         this.col = col; 
         this.type = type;
-        const color = '#5c3c92';
+        const color = '#f5f0e1';
 
         this.tiles = [
             new Tile(this.row, this.col, 2, color),
