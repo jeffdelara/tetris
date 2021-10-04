@@ -4,12 +4,13 @@ class TPiece {
         this.row = row;
         this.col = col; 
         this.type = type;
+        const color = '#077b8a';
 
         this.tiles = [
-            new Tile(this.row, this.col - 1, 2),
-            new Tile(this.row, this.col, 2),
-            new Tile(this.row, this.col + 1, 2),
-            new Tile(this.row + 1, this.col, 2)
+            new Tile(this.row, this.col - 1, 2, color),
+            new Tile(this.row, this.col, 2, color),
+            new Tile(this.row, this.col + 1, 2, color),
+            new Tile(this.row + 1, this.col, 2, color)
         ];
 
         this.STATE = {
