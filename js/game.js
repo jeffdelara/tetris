@@ -54,6 +54,7 @@ class Game {
     {
         // console.log(new LPiece(1, 3));
         const pieces = [
+            new ZPiece(1, 3),
             new JPiece(2, 3), 
             new IPiece(1, 3),
             new SquarePiece(1, 4),
@@ -266,7 +267,7 @@ class Game {
         const board = this.board;
         const tileWidth = this.tileWidth;
 
-        ctx.strokeStyle = "#FFF";
+        ctx.strokeStyle = "#000";
         ctx.lineWidth = 2;
         const height = board.length;
         const width = board[0].length;
