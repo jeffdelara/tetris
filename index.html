@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
     <title>Tetris</title>
 </head>
@@ -11,8 +12,27 @@
 
     <main>
         <div class="container">
-            <canvas tabindex="1" id="canvas"></canvas>
-            <div>ARROW keys to move. SPACE to rotate. P to pause.</div>
+            <div>
+                <canvas tabindex="1" id="canvas"></canvas>
+            </div>
+
+            <div id="ui">
+                <img id="logo" src="images/logo.gif" alt="">
+                <div id="score-container">
+                    <h2>Score <span id="score">0</span></h2>
+                </div>
+                <div>
+                    <h4>Instructions</h4>
+                    <ul>
+                        <li><code><i class='bx bxs-left-arrow-square'></i> <i class='bx bxs-down-arrow-square' ></i> <i class='bx bxs-right-arrow-square' ></i></code> to move</li>
+                        <li><code>SPACE</code> to rotate</li>
+                        <li><code>P</code> to pause</li>
+                    </ul>
+                    <div>
+                        <i class='bx bxl-github' ></i> Github
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 

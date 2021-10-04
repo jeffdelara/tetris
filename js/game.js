@@ -11,6 +11,7 @@ class Game {
             CHECKING: 2,
             PAUSE: 3
         }
+        this.score = 0;
         this.counter = 0;
         this.speed = 35;
         this.gameState = this.STATE.PLAYING;
@@ -80,7 +81,7 @@ class Game {
         canvas.width = this.board[0].length * this.tileWidth;
         canvas.height = this.board.length * this.tileWidth;
 
-        // this.createRandomTiles(10);
+        this.score = 0;
 
         this.player.setPiece(this.createRandomPiece());
         this.gameState = this.STATE.PLAYING;
@@ -161,6 +162,7 @@ class Game {
             this.transferToGameTiles(this.player.tiles);
             // remove player tile
             this.player.removeTiles();
+
             isLocked = true;
             this.counter = 0;
         }
@@ -228,6 +230,10 @@ class Game {
                 tile.row += rowDrop;
             }
         }
+
+        this.score += (rowDrop * 1000) * rowDrop;
+        const scoreSpan = document.getElementById('score');
+        scoreSpan.textContent = this.score;
     }
     
     encodeTilesToBoard()

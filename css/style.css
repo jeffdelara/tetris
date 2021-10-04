@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap');
+
+:root {
+    font-size: 14px;
+}
+
+body {
+    padding: 0;
+    margin: 0; 
+    font-family: 'Fira Mono', monospace;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    color: #555;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,8 +22,13 @@
 
 .container {
     width: 900px;
-    margin: 0 auto;
     text-align: center;
+    position: relative;
+}
+
+#logo {
+    max-width: 200px;
+    width: 100%;
 }
 
 main {
@@ -23,4 +44,37 @@ main {
     padding: .2rem .1rem;
     outline: none;
     border-radius: 10px;
+}
+
+#score-container {
+    background-color: #EEE;
+    color: #000;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    margin: 1rem;
+}
+
+#ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+h4 {
+    font-size: 1.3rem;
+}
+
+ul {
+    margin: .5rem 0;
+    list-style-type: none;
+}
+
+ul li {
+    margin: 1rem 0;
+}
+
+code {
+    font-weight: 700;
+    padding: .3rem .8rem;
+    border-radius: 3px;
 }
