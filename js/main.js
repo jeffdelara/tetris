@@ -30,12 +30,23 @@ document.addEventListener('keydown', function(e){
             break;
         
         case 'ArrowDown':
-            // game.player.moveDown(game.board);
             game.counter = game.speed;
             break;
 
         case 'ArrowUp':
             // game.player.moveUp(game.board);
+            break;
+
+        case 'p':
+            if(game.gameState === game.STATE.PAUSE) 
+            {
+                game.gameState = game.STATE.PLAYING;
+                game.counter = 0;
+            } 
+            else 
+            {
+                game.gameState = game.STATE.PAUSE;
+            }
             break;
 
         case ' ':
