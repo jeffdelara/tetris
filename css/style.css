@@ -1,17 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 :root {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 body {
     padding: 0;
     margin: 0; 
-    font-family: 'Fira Mono', monospace;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    color: #555;
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(40, 44, 52);
+    color: white;
 }
 
 * {
@@ -27,8 +24,9 @@ body {
 }
 
 #logo {
-    max-width: 200px;
-    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    text-shadow: 2px 2px 0px #000;
 }
 
 main {
@@ -77,4 +75,13 @@ code {
     font-weight: 700;
     padding: .3rem .8rem;
     border-radius: 3px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
 }

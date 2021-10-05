@@ -230,7 +230,11 @@ class Game {
                 tile.row += rowDrop;
             }
         }
+        this.computeScore(rowDrop);
+    }
 
+    computeScore(rowDrop)
+    {
         this.score += (rowDrop * 1000) * rowDrop;
         const scoreSpan = document.getElementById('score');
         scoreSpan.textContent = this.score;
