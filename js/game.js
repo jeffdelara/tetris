@@ -12,6 +12,11 @@ class Game {
             PAUSE: 3,
             REMOVING_TILES: 4
         }
+        this.fallSoundEffect = new Audio('../sound/fall.wav');
+        this.fallSoundEffect.volume = 0.15;
+        this.lineSoundEffect = new Audio('../sound/line.wav');
+        this.lineSoundEffect.volume = 0.1;
+
         this.score = 0;
         this.counter = 0;
         this.speed = 35;
@@ -81,6 +86,8 @@ class Game {
     {
         canvas.width = this.board[0].length * this.tileWidth;
         canvas.height = this.board.length * this.tileWidth;
+
+        
 
         this.score = 0;
 
@@ -167,6 +174,8 @@ class Game {
             // remove player tile
             this.player.removeTiles();
 
+            this.fallSoundEffect.play();
+
             isLocked = true;
             this.counter = 0;
         }
@@ -200,8 +209,11 @@ class Game {
                 completeRows.push(i);
             }
         }
-        
-        this.removeRow(completeRows)
+        if(completeRows.length > 0) 
+        {
+            this.lineSoundEffect.play();
+            this.removeRow(completeRows);
+        }
     }
 
     removeRow(rows)
