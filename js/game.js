@@ -9,7 +9,8 @@ class Game {
         this.STATE = {
             PLAYING: 1, 
             CHECKING: 2,
-            PAUSE: 3
+            PAUSE: 3,
+            REMOVING_TILES: 4
         }
         this.score = 0;
         this.counter = 0;
@@ -116,6 +117,9 @@ class Game {
                 
                 this.gameState = this.STATE.PLAYING;
                 break;
+
+            case this.STATE.REMOVING_TILES:
+                break;
             
             case this.STATE.PAUSE:
                 break;
@@ -191,19 +195,18 @@ class Game {
             }
             if(rowScore === 10) 
             {
+                this.counter = 0;
+                this.gameState = this.STATE.REMOVING_TILES;
                 completeRows.push(i);
-                // increaseScore();
             }
         }
-        if(completeRows.length > 0)
-        {
-            this.removeRow(completeRows);
-        }
+        
+        this.removeRow(completeRows)
     }
 
     removeRow(rows)
     {
-        for(let i = 0; i < rows.length; i++) 
+        for(let i = 0; i < rows.length; i++)
         {
             for(let j = this.tiles.length - 1; j >= 0; j--)
             {
@@ -213,24 +216,28 @@ class Game {
                 }
             }
         }
-
         this.dropTiles(rows);
     }
 
     dropTiles(rows)
     {
-        const rowDrop = rows.length;
-        const min = Math.min(...rows);
-        
-        for(let i = 0; i < this.tiles.length; i++)
+        let level = 0;
+        for(let i = 0; i < rows.length; i++)
         {
-            const tile = this.tiles[i];
-            if(tile.row < min) 
+            rows[i] += level;
+            for(let j = 0; j < this.tiles.length; j++)
             {
-                tile.row += rowDrop;
+                const tile = this.tiles[j];
+                if(tile.row < rows[i]) 
+                {
+                    tile.row++;
+                }
             }
+            level++;
         }
-        this.computeScore(rowDrop);
+        
+        this.computeScore(rows.length);
+        this.gameState = this.STATE.CHECKING;
     }
 
     computeScore(rowDrop)
