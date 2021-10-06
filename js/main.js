@@ -11,10 +11,11 @@ game.init();
 // Music & Sounds
 const volume = 0.05;
 const bgMusic = new Audio('../sound/soundtrack.mp3');
+
 bgMusic.preload = 'auto';
 bgMusic.volume = volume;
 bgMusic.loop = true;
-bgMusic.play();
+// bgMusic.play();
 
 requestAnimationFrame(animation);
 

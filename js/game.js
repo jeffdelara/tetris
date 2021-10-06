@@ -62,13 +62,13 @@ class Game {
     {
         // console.log(new LPiece(1, 3));
         const pieces = [
-            new LPiece(1, 3),
-            new SPiece(1, 3), 
-            new ZPiece(1, 3),
-            new JPiece(2, 3), 
-            new IPiece(1, 3),
-            new SquarePiece(1, 4),
-            new TPiece(1, 3)
+            new LPiece(1, 4),
+            new SPiece(0, 4), 
+            new ZPiece(0, 4),
+            new JPiece(1, 4), 
+            new IPiece(1, 4),
+            new SquarePiece(0, 4),
+            new TPiece(0, 4)
         ];
 
         const randomIndex = Math.floor(Math.random() * pieces.length);
@@ -177,7 +177,7 @@ class Game {
             this.fallSoundEffect.play();
 
             isLocked = true;
-            this.counter = 0;
+            this.counter = this.speed;
         }
         else 
         {
@@ -249,7 +249,6 @@ class Game {
         }
         
         this.computeScore(rows.length);
-        this.gameState = this.STATE.CHECKING;
     }
 
     computeScore(rowDrop)
