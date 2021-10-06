@@ -8,5 +8,6 @@ class Tile
         this.col = col; 
         this.type = type;
         this.color = color;
+        this.width = 35;
     }
 }

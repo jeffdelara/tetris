@@ -1,10 +1,12 @@
 class Game {
     constructor(canvas, ctx)
     {
+        this.animationSpeed = 0;
         this.canvas = canvas;
         this.ctx = ctx;
         this.tileWidth = 35;
         this.tiles = [];
+        this.completeRows = [];
         this.player = null;
         this.STATE = {
             PLAYING: 1, 
@@ -95,9 +97,10 @@ class Game {
         this.gameState = this.STATE.PLAYING;
         this.counter = 0;
     }
-
+    
     update()
     {
+        console.log(this.gameState);
         // main program
         if(this.counter >= this.speed) 
         {
@@ -112,20 +115,48 @@ class Game {
 
             case this.STATE.CHECKING:
                 const isLocked = this.lockPlayerPiece();
-                this.checkCompleteRows();
+                const completeRow = this.checkCompleteRows();
+                
+                if(completeRow)
+                {
+                    this.gameState = this.STATE.REMOVING_TILES;
+                    break;
+                }
+                else 
+                {
+                    this.gameState = this.STATE.PLAYING;
+                }
 
-                if(isLocked)
+                if(isLocked && !completeRow) 
                 {
                     // give player new tiles
                     const piece = this.createRandomPiece();
                     // give player tiles
                     this.player.setPiece(piece);
                 }
-                
-                this.gameState = this.STATE.PLAYING;
                 break;
 
             case this.STATE.REMOVING_TILES:
+                
+                for(let tile of this.tiles)
+                {
+                    for(let completeRow of this.completeRows)
+                    {
+                        if(tile.row === completeRow)
+                        {
+                            if(this.animationSpeed % 3 === 0) tile.color = "#FFFFFF";
+                            else tile.color = "#000000";
+                        }
+                    }   
+                }
+                if(this.animationSpeed === 20)
+                {
+                    this.removeRow(this.completeRows);
+                    this.animationSpeed = 0;
+                    this.lineSoundEffect.play();
+                    this.gameState = this.STATE.PLAYING;
+                }
+                this.animationSpeed++;
                 break;
             
             case this.STATE.PAUSE:
@@ -190,7 +221,7 @@ class Game {
     {
         const bottom = this.board.length - 1;
         const rowSize = this.board[0].length;
-        let completeRows = [];
+        this.completeRows = [];
 
         for(let i = bottom; i > 0; i--) 
         {
@@ -204,16 +235,14 @@ class Game {
             }
             if(rowScore === 10) 
             {
-                this.counter = 0;
-                this.gameState = this.STATE.REMOVING_TILES;
-                completeRows.push(i);
+                this.completeRows.push(i);
             }
         }
-        if(completeRows.length > 0) 
+        if(this.completeRows.length > 0) 
         {
-            this.lineSoundEffect.play();
-            this.removeRow(completeRows);
+            return true;
         }
+        return false;
     }
 
     removeRow(rows)
@@ -293,7 +322,7 @@ class Game {
     drawTile(tile)
     {
         this.ctx.fillStyle = tile.color; 
-        this.ctx.fillRect(tile.col * this.tileWidth, tile.row * this.tileWidth, this.tileWidth, this.tileWidth);
+        this.ctx.fillRect(tile.col * tile.width, tile.row * tile.width, tile.width, tile.width);
     }
 
     drawGridLines()
