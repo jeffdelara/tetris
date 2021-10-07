@@ -137,26 +137,7 @@ class Game {
                 break;
 
             case this.STATE.REMOVING_TILES:
-                
-                for(let tile of this.tiles)
-                {
-                    for(let completeRow of this.completeRows)
-                    {
-                        if(tile.row === completeRow)
-                        {
-                            if(this.animationSpeed % 3 === 0) tile.color = "#FFFFFF";
-                            else tile.color = "#000000";
-                        }
-                    }   
-                }
-                if(this.animationSpeed === 20)
-                {
-                    this.removeRow(this.completeRows);
-                    this.animationSpeed = 0;
-                    this.lineSoundEffect.play();
-                    this.gameState = this.STATE.PLAYING;
-                }
-                this.animationSpeed++;
+                this.removeTileAnimation();
                 break;
             
             case this.STATE.PAUSE:
@@ -260,6 +241,37 @@ class Game {
         this.dropTiles(rows);
     }
 
+    removeTileAnimation()
+    {
+        for(let tile of this.tiles)
+        {
+            for(let completeRow of this.completeRows)
+            {
+                if(tile.row === completeRow)
+                {
+                    
+                    if(this.animationSpeed % 4 === 0)
+                    {
+                        tile.width *= Math.sin(.7);
+                        tile.color = "#FFFFFF";
+                    } 
+                    else
+                    {
+                        tile.color = "#000000";
+                    } 
+                }
+            }   
+        }
+        if(this.animationSpeed === 30)
+        {
+            this.removeRow(this.completeRows);
+            this.lineSoundEffect.play();
+            this.gameState = this.STATE.PLAYING;
+            this.animationSpeed = 0;
+        }
+        this.animationSpeed++;
+    }
+
     dropTiles(rows)
     {
         let level = 0;
@@ -322,7 +334,7 @@ class Game {
     drawTile(tile)
     {
         this.ctx.fillStyle = tile.color; 
-        this.ctx.fillRect(tile.col * tile.width, tile.row * tile.width, tile.width, tile.width);
+        this.ctx.fillRect(tile.col * this.tileWidth, tile.row * this.tileWidth, tile.width, tile.width);
     }
 
     drawGridLines()
