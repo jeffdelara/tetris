@@ -119,6 +119,36 @@ class Player
         }
     }
 
+    instantDrop(board)
+    {
+        const distances = [];
+        const bottom = board.length - 1;
+
+        for(let tile of this.piece.tiles)
+        {
+            for(let i = tile.row; i < board.length; i++)
+            {
+                // if hits idle tile
+                const distance = i - tile.row;
+                if(board[i][tile.col] === 1)
+                {
+                    distances.push(distance - 1); 
+                }
+
+                if(i === bottom)
+                {
+                    distances.push(distance);
+                }
+            }
+        }
+
+        // drop my tiles with the distance
+        for(let tile of this.piece.tiles)
+        {
+            tile.row += Math.min(...distances);
+        }
+    }
+
     moveUp(board)
     {
         let blocked = false;
