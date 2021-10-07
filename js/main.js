@@ -15,7 +15,7 @@ const bgMusic = new Audio('../sound/soundtrack.mp3');
 bgMusic.preload = 'auto';
 bgMusic.volume = volume;
 bgMusic.loop = true;
-// bgMusic.play();
+bgMusic.play();
 
 requestAnimationFrame(animation);
 
@@ -49,23 +49,28 @@ document.addEventListener('keydown', function(e){
                 game.counter = game.speed;
                 break;
 
-            case 'p':
-                if(game.gameState === game.STATE.PAUSE) 
-                {
-                    game.gameState = game.STATE.PLAYING;
-                    bgMusic.play();
-                    game.counter = 0;
-                } 
-                else 
-                {
-                    game.gameState = game.STATE.PAUSE;
-                    bgMusic.pause();
-                }
-                break;
-
             case ' ':
                 game.player.piece.rotate(game.board);
                 break;
         }
+    }
+
+    if(game.gameState === game.STATE.PLAYING || game.gameState === game.STATE.PAUSE)
+    {
+        if(e.key === 'p')
+        {
+            if(game.gameState === game.STATE.PAUSE) 
+            {
+                game.gameState = game.STATE.PLAYING;
+                bgMusic.play();
+                game.counter = 0;
+            } 
+            else 
+            {
+                game.gameState = game.STATE.PAUSE;
+                bgMusic.pause();
+            }
+        }
+        
     }
 });
