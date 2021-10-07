@@ -100,7 +100,6 @@ class Game {
     
     update()
     {
-        console.log(this.gameState);
         // main program
         if(this.counter >= this.speed) 
         {
