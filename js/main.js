@@ -28,41 +28,44 @@ function animation()
 }
 
 document.addEventListener('keydown', function(e){
-    switch(e.key)
+    if(game.gameState === game.STATE.PLAYING)
     {
-        case 'ArrowRight':
-            game.player.moveRight(game.board);
-            break;
+        switch(e.key)
+        {
+            case 'ArrowRight':
+                game.player.moveRight(game.board);
+                break;
 
-        case 'ArrowLeft':
-            game.player.moveLeft(game.board);
-            break;
-        
-        case 'ArrowDown':
-            game.counter = game.speed;
-            break;
+            case 'ArrowLeft':
+                game.player.moveLeft(game.board);
+                break;
+            
+            case 'ArrowDown':
+                game.counter = game.speed;
+                break;
 
-        case 'ArrowUp':
-            game.player.instantDrop(game.board);
-            game.counter = game.speed;
-            break;
+            case 'ArrowUp':
+                game.player.instantDrop(game.board);
+                game.counter = game.speed;
+                break;
 
-        case 'p':
-            if(game.gameState === game.STATE.PAUSE) 
-            {
-                game.gameState = game.STATE.PLAYING;
-                bgMusic.play();
-                game.counter = 0;
-            } 
-            else 
-            {
-                game.gameState = game.STATE.PAUSE;
-                bgMusic.pause();
-            }
-            break;
+            case 'p':
+                if(game.gameState === game.STATE.PAUSE) 
+                {
+                    game.gameState = game.STATE.PLAYING;
+                    bgMusic.play();
+                    game.counter = 0;
+                } 
+                else 
+                {
+                    game.gameState = game.STATE.PAUSE;
+                    bgMusic.pause();
+                }
+                break;
 
-        case ' ':
-            game.player.piece.rotate(game.board);
-            break;
+            case ' ':
+                game.player.piece.rotate(game.board);
+                break;
+        }
     }
 });
