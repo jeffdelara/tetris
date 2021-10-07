@@ -43,7 +43,8 @@ document.addEventListener('keydown', function(e){
             break;
 
         case 'ArrowUp':
-            // game.player.moveUp(game.board);
+            game.player.instantDrop(game.board);
+            game.counter = game.speed;
             break;
 
         case 'p':
