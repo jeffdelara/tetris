@@ -1,5 +1,5 @@
 class Game {
-    constructor(canvas, ctx)
+    constructor(canvas, ctx, {bgMusic})
     {
         this.animationSpeed = 0;
         this.canvas = canvas;
@@ -12,7 +12,9 @@ class Game {
             PLAYING: 1, 
             CHECKING: 2,
             PAUSE: 3,
-            REMOVING_TILES: 4
+            REMOVING_TILES: 4,
+            GAME_OVER: 5, 
+            END: 6
         }
         this.fallSoundEffect = new Audio('../sound/fall.wav');
         this.fallSoundEffect.volume = 0.15;
@@ -89,19 +91,34 @@ class Game {
         canvas.width = this.board[0].length * this.tileWidth;
         canvas.height = this.board.length * this.tileWidth;
 
-        
-
         this.score = 0;
 
         this.player.setPiece(this.createRandomPiece());
         this.gameState = this.STATE.PLAYING;
         this.counter = 0;
+        bgMusic.play();
+    }
+
+    checkIfOver()
+    {
+        const row = 0;
+        const colLength = this.board[0].length;
+        for(let i = 0; i < colLength; i++)
+        {
+            if(this.board[row][i] === 1) 
+            {
+                return true;
+            }
+        }
+        return false;
     }
     
     update()
     {
-        // main program
-        if(this.counter >= this.speed) 
+        const isOver = this.checkIfOver();
+        if(isOver) this.gameState = this.STATE.GAME_OVER;
+
+        if(this.counter >= this.speed && this.gameState !== this.STATE.GAME_OVER) 
         {
             this.gameState = this.STATE.CHECKING;
             this.counter = 0;
@@ -114,12 +131,12 @@ class Game {
 
             case this.STATE.CHECKING:
                 const isLocked = this.lockPlayerPiece();
-                const completeRow = this.checkCompleteRows();
                 
+                const completeRow = this.checkCompleteRows();
+
                 if(completeRow)
                 {
                     this.gameState = this.STATE.REMOVING_TILES;
-                    break;
                 }
                 else 
                 {
@@ -142,6 +159,13 @@ class Game {
             case this.STATE.PAUSE:
                 break;
 
+            case this.STATE.GAME_OVER:
+                this.endGame();
+                break;
+
+            case this.STATE.END:
+                break;
+
             default:
                 break;
         }
@@ -150,11 +174,32 @@ class Game {
         this.encodePlayerTilesToBoard();
     }
 
+    endGame()
+    {
+        bgMusic.pause();
+        this.gameState = this.STATE.END;
+    }
+
+    showGameOver()
+    {
+        const midHeight = canvas.height * .5;
+        const midWidth = canvas.width * .5;
+        this.ctx.fillStyle = '#000';
+        this.ctx.fillRect(0, midHeight - 50, canvas.width, 100);
+        this.ctx.fillStyle = "#FFF";
+        this.ctx.font = "30px Poppins";
+        this.ctx.fillText("Game Over", midWidth - 85, midHeight + 10);
+    }
+
     draw()
     {
         this.clearBoard();
         this.drawBoard();
         this.drawGridLines();
+        if(this.gameState === this.STATE.END)
+        {
+            this.showGameOver();
+        }
     }
 
     clearBoard()
