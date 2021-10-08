@@ -1,13 +1,3 @@
-
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const game = new Game(canvas, ctx);
-const fps = 60;
-const player = new Player();
-
-game.setPlayer(player);
-game.init();
-
 // Music & Sounds
 const volume = 0.05;
 const bgMusic = new Audio('../sound/soundtrack.mp3');
@@ -15,7 +5,15 @@ const bgMusic = new Audio('../sound/soundtrack.mp3');
 bgMusic.preload = 'auto';
 bgMusic.volume = volume;
 bgMusic.loop = true;
-bgMusic.play();
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const game = new Game(canvas, ctx, {bgMusic: bgMusic});
+const fps = 60;
+const player = new Player();
+
+game.setPlayer(player);
+game.init();
 
 requestAnimationFrame(animation);
 
@@ -71,6 +69,5 @@ document.addEventListener('keydown', function(e){
                 bgMusic.pause();
             }
         }
-        
     }
 });
