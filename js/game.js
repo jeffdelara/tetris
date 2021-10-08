@@ -306,7 +306,7 @@ class Game {
                 }
             }   
         }
-        if(this.animationSpeed === 30)
+        if(this.animationSpeed === 15)
         {
             this.removeRow(this.completeRows);
             this.lineSoundEffect.play();
