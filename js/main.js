@@ -1,7 +1,7 @@
 // Music & Sounds
 const volume = 0.4;
 const bgMusic = new Audio('../sound/soundtrack.mp3');
-
+let isMusicPlaying = false;
 bgMusic.preload = 'auto';
 bgMusic.volume = volume;
 bgMusic.loop = true;
@@ -61,10 +61,12 @@ document.addEventListener('keydown', function(e){
             {
                 game.gameState = game.STATE.PLAYING;
                 game.counter = 0;
+                if(isMusicPlaying) bgMusic.play();
             } 
             else 
             {
                 game.gameState = game.STATE.PAUSE;
+                if(isMusicPlaying) bgMusic.pause();
             }
         }
     }
@@ -72,7 +74,7 @@ document.addEventListener('keydown', function(e){
 
 const musicBtn = document.querySelector('#musicbtn');
 const musicState = document.querySelector('.musicstate');
-let isMusicPlaying = false;
+
 musicBtn.addEventListener('click', function(){
     if(isMusicPlaying)
     {
