@@ -185,7 +185,9 @@ class Game {
         const midHeight = canvas.height * .5;
         const midWidth = canvas.width * .5;
         this.ctx.fillStyle = '#000';
+        this.ctx.globalAlpha = 0.7;
         this.ctx.fillRect(0, midHeight - 50, canvas.width, 100);
+        this.ctx.globalAlpha = 1.0;
         this.ctx.fillStyle = "#FFF";
         this.ctx.font = "30px Poppins";
         this.ctx.fillText("Game Over", midWidth - 85, midHeight + 10);
