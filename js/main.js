@@ -1,5 +1,5 @@
 // Music & Sounds
-const volume = 0.05;
+const volume = 0.4;
 const bgMusic = new Audio('../sound/soundtrack.mp3');
 
 bgMusic.preload = 'auto';
@@ -60,14 +60,31 @@ document.addEventListener('keydown', function(e){
             if(game.gameState === game.STATE.PAUSE) 
             {
                 game.gameState = game.STATE.PLAYING;
-                bgMusic.play();
                 game.counter = 0;
             } 
             else 
             {
                 game.gameState = game.STATE.PAUSE;
-                bgMusic.pause();
             }
         }
     }
+});
+
+const musicBtn = document.querySelector('#musicbtn');
+const musicState = document.querySelector('.musicstate');
+let isMusicPlaying = false;
+musicBtn.addEventListener('click', function(){
+    if(isMusicPlaying)
+    {
+        musicState.textContent = 'OFF';
+        musicBtn.classList.toggle('active');
+        bgMusic.pause();
+    }
+    else 
+    {
+        musicState.textContent = 'ON';
+        musicBtn.classList.toggle('active');
+        bgMusic.play();
+    }
+    isMusicPlaying = !isMusicPlaying;
 });

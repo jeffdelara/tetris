@@ -17,9 +17,9 @@ class Game {
             END: 6
         }
         this.fallSoundEffect = new Audio('../sound/fall.wav');
-        this.fallSoundEffect.volume = 0.15;
+        this.fallSoundEffect.volume = 0.8;
         this.lineSoundEffect = new Audio('../sound/line.wav');
-        this.lineSoundEffect.volume = 0.1;
+        this.lineSoundEffect.volume = 0.8;
 
         this.score = 0;
         this.counter = 0;
@@ -96,7 +96,6 @@ class Game {
         this.player.setPiece(this.createRandomPiece());
         this.gameState = this.STATE.PLAYING;
         this.counter = 0;
-        bgMusic.play();
     }
 
     checkIfOver()
