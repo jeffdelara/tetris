@@ -103,3 +103,19 @@ a:hover {
     background-color: white;
     color: black;
 }
+
+button {
+    padding: .5rem 1rem;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: .3s ease-in;
+    font-size: 1.1rem;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
