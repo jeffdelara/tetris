@@ -2,6 +2,7 @@
 const volume = 0.4;
 const bgMusic = new Audio('../sound/soundtrack.mp3');
 let isMusicPlaying = false;
+let isShadowOn = false;
 bgMusic.preload = 'auto';
 bgMusic.volume = volume;
 bgMusic.loop = true;
@@ -37,7 +38,10 @@ function animation()
             player = new Player();
             game.setPlayer(player);
             game.init();
+            
             if(isMusicPlaying) bgMusic.play();
+            shadowOff();
+
             requestAnimationFrame(animation);
             this.remove();
         });
@@ -120,6 +124,12 @@ function shadowHandler()
         shadowBtn.classList.toggle('active');
     }
     game.shadow = !game.shadow;
+}
+
+function shadowOff()
+{
+    shadowState.textContent = 'OFF';
+    shadowBtn.classList.remove('active');
 }
 
 function musicHandler()
