@@ -8,9 +8,9 @@ bgMusic.loop = true;
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const game = new Game(canvas, ctx, {bgMusic: bgMusic});
+let game = new Game(canvas, ctx, {bgMusic: bgMusic});
 const fps = 60;
-const player = new Player();
+let player = new Player();
 
 game.setPlayer(player);
 game.init();
@@ -19,12 +19,35 @@ requestAnimationFrame(animation);
 
 function animation()
 {
-    setTimeout(function(){
-        game.run();
-        requestAnimationFrame(animation);
-    }, 1000/fps)
+    if(game.gameState !== game.STATE.END)
+    {
+        setTimeout(function(){
+            game.run();
+            requestAnimationFrame(animation);
+        }, 1000/fps)
+    }
+    else 
+    {
+        game.showGameOver();
+        const btn = document.createElement('button');
+        btn.textContent = "Restart";
+
+        btn.addEventListener('click', function(){
+            game = new Game(canvas, ctx, {bgMusic: bgMusic});
+            player = new Player();
+            game.setPlayer(player);
+            game.init();
+            requestAnimationFrame(animation);
+            this.remove();
+        });
+
+        const canvasContainer = document.querySelector('#canvas-container');
+        canvasContainer.append(btn);
+    }
+    
 }
 
+// Key controls
 document.addEventListener('keydown', function(e){
     if(game.gameState === game.STATE.PLAYING)
     {
@@ -70,12 +93,36 @@ document.addEventListener('keydown', function(e){
             }
         }
     }
+
+    switch(e.key)
+    {
+        case 's':
+            shadowHandler();
+            break;
+        case 'm':
+            musicHandler();
+            break;
+    }
 });
 
-const musicBtn = document.querySelector('#musicbtn');
-const musicState = document.querySelector('.musicstate');
+//  Handlers
+function shadowHandler()
+{
+    if(game.shadow)
+    {
+        shadowState.textContent = 'OFF';
+        shadowBtn.classList.toggle('active');
+    }
+    else 
+    {
+        shadowState.textContent = 'ON';
+        shadowBtn.classList.toggle('active');
+    }
+    game.shadow = !game.shadow;
+}
 
-musicBtn.addEventListener('click', function(){
+function musicHandler()
+{
     if(isMusicPlaying)
     {
         musicState.textContent = 'OFF';
@@ -89,4 +136,15 @@ musicBtn.addEventListener('click', function(){
         bgMusic.play();
     }
     isMusicPlaying = !isMusicPlaying;
-});
+}
+
+// Events
+const shadowBtn = document.querySelector('#shadowbtn');
+const shadowState = document.querySelector('.shadowstate');
+
+shadowBtn.addEventListener('click', shadowHandler);
+
+const musicBtn = document.querySelector('#musicbtn');
+const musicState = document.querySelector('.musicstate');
+
+musicBtn.addEventListener('click', musicHandler);

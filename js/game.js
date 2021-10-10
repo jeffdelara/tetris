@@ -20,7 +20,7 @@ class Game {
         this.fallSoundEffect.volume = 0.8;
         this.lineSoundEffect = new Audio('../sound/line.wav');
         this.lineSoundEffect.volume = 0.8;
-
+        this.shadow = false;
         this.score = 0;
         this.counter = 0;
         this.speed = 35;
@@ -196,11 +196,13 @@ class Game {
     {
         this.clearBoard();
         this.drawBoard();
-        this.drawGridLines();
-        if(this.gameState === this.STATE.END)
+
+        if(this.shadow) 
         {
-            this.showGameOver();
-        }
+            this.drawShadow();
+        } 
+        
+        this.drawGridLines();
     }
 
     clearBoard()
@@ -380,6 +382,19 @@ class Game {
     {
         this.ctx.fillStyle = tile.color; 
         this.ctx.fillRect(tile.col * this.tileWidth, tile.row * this.tileWidth, tile.width, tile.width);
+    }
+
+    drawShadow()
+    {
+        const distance = this.player.getDistance(this.board);
+        const playerTiles = this.player.piece.tiles;
+        
+        playerTiles.forEach(tile => {
+            this.ctx.globalAlpha = 0.4;
+            this.ctx.fillStyle = tile.color; 
+            this.ctx.fillRect(tile.col * this.tileWidth, (tile.row + distance) * this.tileWidth, tile.width, tile.width);
+            this.ctx.globalAlpha = 1;
+        });
     }
 
     drawGridLines()
