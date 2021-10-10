@@ -37,6 +37,7 @@ function animation()
             player = new Player();
             game.setPlayer(player);
             game.init();
+            if(isMusicPlaying) bgMusic.play();
             requestAnimationFrame(animation);
             this.remove();
         });
