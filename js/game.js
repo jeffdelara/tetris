@@ -390,7 +390,7 @@ class Game {
         const playerTiles = this.player.piece.tiles;
         
         playerTiles.forEach(tile => {
-            this.ctx.globalAlpha = 0.4;
+            this.ctx.globalAlpha = 0.25;
             this.ctx.fillStyle = tile.color; 
             this.ctx.fillRect(tile.col * this.tileWidth, (tile.row + distance) * this.tileWidth, tile.width, tile.width);
             this.ctx.globalAlpha = 1;
